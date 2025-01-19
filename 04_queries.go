@@ -1,8 +1,3 @@
-// Set these environment variables
-// WCD_HOSTNAME            your Weaviate instance hostname
-// WCD_API_KEY          your Weaviate instance API key
-// COHERE_APIKEY           your Cohere API key
-
 package main
 
 import (
@@ -16,6 +11,7 @@ import (
 )
 
 func main() {
+	// Erstellt die Konfiguration für die Verbindung mit Weaviate.
 	cfg := weaviate.Config{
 		Host:       os.Getenv("WCD_HOSTNAME"),
 		Scheme:     "https",
@@ -25,27 +21,32 @@ func main() {
 		},
 	}
 
+	// Initialisiert den Weaviate-Client mit der oben definierten Konfiguration.
 	client, err := weaviate.NewClient(cfg)
+	// Gibt eine Fehlermeldung aus, falls die Client-Initialisierung fehlschlägt.
 	if err != nil {
 		fmt.Println(err)
 	}
 
+	// Erstellt einen Kontext für die Anfrage.
 	ctx := context.Background()
 
+	// Führt eine GraphQL-Abfrage aus, um Daten aus der Klasse "Question" zu holen.
 	response, err := client.GraphQL().Get().
-		WithClassName("Question").
+		WithClassName("Question"). // Gibt an, dass die Abfrage auf der Klasse "Question" basiert.
 		WithFields(
-			graphql.Field{Name: "question"},
-			graphql.Field{Name: "answer"},
-			graphql.Field{Name: "category"},
+			graphql.Field{Name: "question"}, // Holt das Feld "question".
+			graphql.Field{Name: "answer"},   // Holt das Feld "answer".
+			graphql.Field{Name: "category"}, // Holt das Feld "category".
 		).
-		WithNearText(client.GraphQL().NearTextArgBuilder().
-			WithConcepts([]string{"biology"})).
-		WithLimit(2).
-		Do(ctx)
+		WithNearText(client.GraphQL().NearTextArgBuilder(). // Filtert die Abfrage mit "NearText".
+									WithConcepts([]string{"biology"})). // Sucht nach Einträgen, die sich auf das Konzept "biology" beziehen.
+		WithLimit(2).                                       // Beschränkt die Abfrage auf maximal 2 Ergebnisse.
+		Do(ctx)                                             // Führt die Abfrage mit dem erstellten Kontext aus.
 
 	if err != nil {
-		panic(err)
+		panic(err) // Beendet das Programm, falls die Abfrage fehlschlägt.
 	}
+	// Gibt die Antwort der GraphQL-Abfrage aus.
 	fmt.Printf("%v", response)
 }

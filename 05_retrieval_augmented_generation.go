@@ -1,8 +1,3 @@
-// Set these environment variables
-// WCD_HOSTNAME            your Weaviate instance hostname
-// WCD_API_KEY          your Weaviate instance API key
-// COHERE_APIKEY           your Cohere API key
-
 package main
 
 import (
@@ -32,25 +27,29 @@ func main() {
 
 	ctx := context.Background()
 
-	generatePrompt := "Write a tweet with emojis about these facts."
+	// Definiert ein Prompt für die Generierung von Inhalten.
+	generatePrompt := "How does a heart work."
 
+	// Führt eine GraphQL-Abfrage aus, um Daten aus der Klasse "Question" zu holen.
 	gs := graphql.NewGenerativeSearch().GroupedResult(generatePrompt)
 
 	response, err := client.GraphQL().Get().
-		WithClassName("Question").
+		WithClassName("Question"). // Gibt an, dass die Abfrage auf der Klasse "Question" basiert.
 		WithFields(
-			graphql.Field{Name: "question"},
-			graphql.Field{Name: "answer"},
-			graphql.Field{Name: "category"},
+			graphql.Field{Name: "question"}, // Holt das Feld "question".
+			graphql.Field{Name: "answer"},   // Holt das Feld "answer".
+			graphql.Field{Name: "category"}, // Holt das Feld "category".
 		).
-		WithGenerativeSearch(gs).
-		WithNearText(client.GraphQL().NearTextArgBuilder().
-			WithConcepts([]string{"biology"})).
-		WithLimit(2).
-		Do(ctx)
+		WithGenerativeSearch(gs).                           // Fügt die generative Suche basierend auf dem Prompt hinzu.
+		WithNearText(client.GraphQL().NearTextArgBuilder(). // Filtert die Abfrage mit "NearText".
+									WithConcepts([]string{"biology"})). // Sucht nach Einträgen, die sich auf das Konzept "biology" beziehen.
+		WithLimit(2).                                       // Beschränkt die Abfrage auf maximal 2 Ergebnisse.
+		Do(ctx)                                             // Führt die Abfrage mit dem erstellten Kontext aus.
 
 	if err != nil {
+		// Beendet das Programm, falls die Abfrage fehlschlägt.
 		panic(err)
 	}
+	// Gibt die Antwort der GraphQL-Abfrage aus.
 	fmt.Printf("%v", response)
 }
