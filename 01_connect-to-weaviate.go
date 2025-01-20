@@ -13,9 +13,9 @@ func main() {
 	// Erstellt eine Konfigurationsstruktur für die Verbindung mit Weaviate.
 	// Die Host-Adresse und der API-Schlüssel werden aus Umgebungsvariablen gelesen.
 	cfg := weaviate.Config{
-		Host:       os.Getenv("WCD_HOSTNAME"),                    // Hostname der Weaviate-Instanz
-		Scheme:     "https",                                      // Kommunikationsschema (HTTPS)
-		AuthConfig: auth.ApiKey{Value: os.Getenv("WCD_API_KEY")}, // Authentifizierung mit API-Schlüssel
+		Host:       os.Getenv("WCD_HOSTNAME"),
+		Scheme:     "https",
+		AuthConfig: auth.ApiKey{Value: os.Getenv("WCD_API_KEY")},
 	}
 
 	// Erstellt einen neuen Weaviate-Client basierend auf der Konfiguration.

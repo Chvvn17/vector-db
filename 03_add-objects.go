@@ -16,11 +16,11 @@ import (
 func main() {
 	// Erstellt die Konfiguration für die Verbindung mit Weaviate.
 	cfg := weaviate.Config{
-		Host:       os.Getenv("WCD_HOSTNAME"),                    // Hostname der Weaviate-Instanz
-		Scheme:     "https",                                      // Kommunikationsschema (HTTPS)
-		AuthConfig: auth.ApiKey{Value: os.Getenv("WCD_API_KEY")}, // Authentifizierung mit API-Schlüssel
+		Host:       os.Getenv("WCD_HOSTNAME"),
+		Scheme:     "https",
+		AuthConfig: auth.ApiKey{Value: os.Getenv("WCD_API_KEY")},
 		Headers: map[string]string{
-			"X-Cohere-Api-Key": os.Getenv("COHERE_APIKEY"), // Zusätzlicher Header für Cohere-API
+			"X-Cohere-Api-Key": os.Getenv("COHERE_APIKEY"),
 		},
 	}
 	// Initialisiert den Weaviate-Client mit der oben definierten Konfiguration.
@@ -55,11 +55,11 @@ func main() {
 	objects := make([]*models.Object, len(items))
 	for i := range items {
 		objects[i] = &models.Object{
-			Class: "Question", // Klasse, in die die Daten eingefügt werden
+			Class: "Question",
 			Properties: map[string]any{
-				"category": items[i]["Category"], // Kategorie der Frage
-				"question": items[i]["Question"], // Die Frage selbst
-				"answer":   items[i]["Answer"],   // Die Antwort auf die Frage
+				"category": items[i]["Category"],
+				"question": items[i]["Question"],
+				"answer":   items[i]["Answer"],
 			},
 		}
 	}
@@ -70,6 +70,7 @@ func main() {
 		// Beendet das Programm, falls das Batch-Schreiben fehlschlägt.
 		panic(err)
 	}
+
 	// Überprüft die Ergebnisse des Batch-Schreibens auf Fehler.
 	for _, res := range batchRes {
 		if res.Result.Errors != nil {

@@ -13,9 +13,9 @@ func main() {
 
 	// Erstellt die Konfiguration für die Verbindung mit Weaviate.
 	cfg := weaviate.Config{
-		Host:       os.Getenv("WCD_HOSTNAME"),                    // Hostname der Weaviate-Instanz
-		Scheme:     "https",                                      // Kommunikationsschema (HTTPS)
-		AuthConfig: auth.ApiKey{Value: os.Getenv("WCD_API_KEY")}, // Authentifizierung mit API-Schlüssel
+		Host:       os.Getenv("WCD_HOSTNAME"),
+		Scheme:     "https",
+		AuthConfig: auth.ApiKey{Value: os.Getenv("WCD_API_KEY")},
 	}
 	// Initialisiert den Weaviate-Client mit der oben definierten Konfiguration.
 	client, err := weaviate.NewClient(cfg)
@@ -25,9 +25,8 @@ func main() {
 	}
 
 	// Definiert eine neue Klasse (Collection) für Weaviate.
-	// Define the collection
 	classObj := &models.Class{
-		Class:      "Question",
+		Class:      "Autos",
 		Vectorizer: "text2vec-cohere",
 		ModuleConfig: map[string]interface{}{
 			"text2vec-cohere":   map[string]interface{}{},
