@@ -42,7 +42,7 @@ func main() {
 		).
 		// Filtert die Ergebnisse basierend auf ihrer semantischen Nähe zum Konzept "biology".
 		WithNearText(client.GraphQL().NearTextArgBuilder().
-			WithConcepts([]string{"biology"})).
+			WithConcepts([]string{"Science"})).
 		// Es werden nur die relevantesten Ergebnisse zurückgegeben, begrenzt auf 1 Eintrag.
 		WithLimit(1).
 		// Führt die Abfrage aus und sendet sie an den Weaviate-Server

@@ -29,7 +29,7 @@ func main() {
 	ctx := context.Background()
 
 	// Definiert ein Prompt für die Generierung von Inhalten.
-	generatePrompt := "Write a tweet with emojis about these facts"
+	generatePrompt := "Schreibe einen Tweet über über das Herz mit Emojis"
 
 	// Führt eine GraphQL-Abfrage aus, um Daten aus der Klasse "Question" zu holen.
 	gs := graphql.NewGenerativeSearch().GroupedResult(generatePrompt)
@@ -45,9 +45,9 @@ func main() {
 		// Filtert die Ergebnisse basierend auf ihrer semantischen Nähe zum Konzept "biology".
 		WithGenerativeSearch(gs).
 		WithNearText(client.GraphQL().NearTextArgBuilder().
-			WithConcepts([]string{"nature"})).
+			WithConcepts([]string{"Science"})).
 		// Es werden nur die relevantesten Ergebnisse zurückgegeben, begrenzt auf 1 Eintrag.
-		WithLimit(1).
+		WithLimit(2).
 		// Führt die Abfrage aus und sendet sie an den Weaviate-Server
 		Do(ctx)
 

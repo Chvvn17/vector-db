@@ -55,7 +55,7 @@ func main() {
 	objects := make([]*models.Object, len(items))
 	for i := range items {
 		objects[i] = &models.Object{
-			Class: "Question",
+			Class: "Tiere",
 			Properties: map[string]any{
 				"category": items[i]["Category"],
 				"question": items[i]["Question"],

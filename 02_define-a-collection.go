@@ -26,7 +26,7 @@ func main() {
 
 	// Definiert eine neue Klasse (Collection) für Weaviate.
 	classObj := &models.Class{
-		Class:      "Question",
+		Class:      "Animals",
 		Vectorizer: "text2vec-cohere",
 		ModuleConfig: map[string]interface{}{
 			"text2vec-cohere":   map[string]interface{}{},
