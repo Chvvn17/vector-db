@@ -25,6 +25,7 @@ func main() {
 		fmt.Println(err)
 	}
 
+	// Erstellt einen Kontext für die Anfrage.
 	ctx := context.Background()
 
 	// Definiert ein Prompt für die Generierung von Inhalten.
@@ -33,6 +34,7 @@ func main() {
 	// Führt eine GraphQL-Abfrage aus, um Daten aus der Klasse "Question" zu holen.
 	gs := graphql.NewGenerativeSearch().GroupedResult(generatePrompt)
 
+	// Führt eine GraphQL-Abfrage aus, um Daten aus der Klasse "Question" zu holen.
 	response, err := client.GraphQL().Get().
 		WithClassName("Question"). // Gibt an, dass die Abfrage auf der Klasse "Question" basiert.
 		WithFields(
