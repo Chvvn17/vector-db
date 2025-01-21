@@ -40,10 +40,13 @@ func main() {
 			graphql.Field{Name: "answer"},
 			graphql.Field{Name: "category"},
 		).
+		// Filtert die Ergebnisse basierend auf ihrer semantischen Nähe zum Konzept "biology".
 		WithGenerativeSearch(gs).
 		WithNearText(client.GraphQL().NearTextArgBuilder().
-			WithConcepts([]string{"biology"})).
-		WithLimit(2).
+			WithConcepts([]string{"nature"})).
+		// Es werden nur die relevantesten Ergebnisse zurückgegeben, begrenzt auf 1 Eintrag.
+		WithLimit(1).
+		// Führt die Abfrage aus und sendet sie an den Weaviate-Server
 		Do(ctx)
 
 	if err != nil {
